@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-type osGlob struct {}
+type osGlob struct{}
 
 func (o osGlob) ReadDir(dir string) ([]os.FileInfo, error) {
 	return ioutil.ReadDir(dir)

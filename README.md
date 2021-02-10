@@ -35,6 +35,7 @@ func Example_simpleExample() {
 	///Users/matt/devtmp/go/globerous/testdata/examplesfs/first/nested first.txt
 	///Users/matt/devtmp/go/globerous/testdata/examplesfs/second/nested second.txt
 }
+
 ```
 
 
@@ -94,6 +95,7 @@ func ExampleHybridGlobRegexPartCompiler_hybridMatching() {
 	//   /Users/matt/devtmp/go/globerous/testdata/examplesfs/first/nested/first.txt
 	//   /Users/matt/devtmp/go/globerous/testdata/examplesfs/third/nested/deeper/third.txt
 }
+
 ```
 
 
@@ -196,6 +198,7 @@ func main() {
 	fmt.Println("Matches:")
 	must(globerous.Print(globerous.NewOSGlobFs(), matcher, path, os.Stdout))
 }
+
 ```
 
 

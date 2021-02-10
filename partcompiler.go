@@ -42,7 +42,7 @@ func GlobPlusPartCompiler(partStr string, next NextPartFn) (Matcher, error) {
 	return GlobMatcherSm(partStr, childMatcher), nil
 }
 
-func parseRegexToMatcher(partStr string, childMatcher Matcher) (Matcher, error)  {
+func parseRegexToMatcher(partStr string, childMatcher Matcher) (Matcher, error) {
 	partRegex, err := regexp.Compile(partStr)
 	return RegexMatcher(partRegex, childMatcher), err
 }

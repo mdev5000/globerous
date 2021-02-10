@@ -40,7 +40,7 @@ func embedFileCode(path string) string {
 	return "```go\n" + string(contentB) + "\n```\n"
 }
 
-func renderMarkdown(contents string, out io.Writer)  {
+func renderMarkdown(contents string, out io.Writer) {
 	funcMap := template.FuncMap{
 		"embed": embedFileCode,
 	}
