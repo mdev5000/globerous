@@ -5,6 +5,7 @@ import (
 	"github.com/mdev5000/globerous"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func Example_simpleExample() {
@@ -17,9 +18,14 @@ func Example_simpleExample() {
 	compiler := globerous.NewCompiler(globerous.GlobPlusPartCompiler)
 	matcher := compiler.MustCompile("*", "*", "*.txt")
 
+	wd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+
 	// Walk matched files and folders.
 	err = globerous.WalkSimple(fs, matcher, path, func(dir string, info os.FileInfo) error {
-		fmt.Println(dir, info.Name())
+		fmt.Println(strings.TrimPrefix(dir, wd), info.Name())
 		return nil
 	})
 	if err != nil {
@@ -27,6 +33,6 @@ func Example_simpleExample() {
 	}
 
 	// Output:
-	///Users/matt/devtmp/go/globerous/testdata/examplesfs/first/nested first.txt
-	///Users/matt/devtmp/go/globerous/testdata/examplesfs/second/nested second.txt
+	///testdata/examplesfs/first/nested first.txt
+	///testdata/examplesfs/second/nested second.txt
 }

@@ -5,6 +5,7 @@ import (
 	"github.com/mdev5000/globerous"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func Example_overview() {
@@ -16,6 +17,11 @@ func Example_overview() {
 
 	compiler := globerous.NewCompiler(globerous.GlobPlusPartCompiler)
 	matcher := compiler.MustCompile("*", "*", "*.txt")
+
+	wd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
 
 	// Walk matched files and folders.
 	err = globerous.WalkSimple(fs, matcher, path, func(dir string, info os.FileInfo) error {
@@ -33,7 +39,7 @@ func Example_overview() {
 	}
 	fmt.Println("List: files and folder:")
 	for _, f := range filesAndFolder {
-		fmt.Println(f)
+		fmt.Println(strings.TrimPrefix(f, wd))
 	}
 
 	// List matched files only.
@@ -43,7 +49,7 @@ func Example_overview() {
 	}
 	fmt.Println("List: files only:")
 	for _, f := range files {
-		fmt.Println(f)
+		fmt.Println(strings.TrimPrefix(f, wd))
 	}
 
 	// List files and folder matching up to a maximum depth of 4.
@@ -57,18 +63,18 @@ func Example_overview() {
 	}
 	fmt.Println("Max Depth:")
 	for _, f := range files {
-		fmt.Println(f)
+		fmt.Println(strings.TrimPrefix(f, wd))
 	}
 	// Output:
 	// List: files and folder:
-	///Users/matt/devtmp/go/globerous/testdata/examplesfs/first/nested/first.txt
-	///Users/matt/devtmp/go/globerous/testdata/examplesfs/second/nested/second.txt
+	///testdata/examplesfs/first/nested/first.txt
+	///testdata/examplesfs/second/nested/second.txt
 	// List: files only:
-	///Users/matt/devtmp/go/globerous/testdata/examplesfs/first/nested/first.txt
-	///Users/matt/devtmp/go/globerous/testdata/examplesfs/second/nested/second.txt
+	///testdata/examplesfs/first/nested/first.txt
+	///testdata/examplesfs/second/nested/second.txt
 	// Max Depth:
-	///Users/matt/devtmp/go/globerous/testdata/examplesfs/first/nested/first.txt
-	///Users/matt/devtmp/go/globerous/testdata/examplesfs/second/nested/second.txt
+	///testdata/examplesfs/first/nested/first.txt
+	///testdata/examplesfs/second/nested/second.txt
 }
 
 func Example_handlingErrors() {

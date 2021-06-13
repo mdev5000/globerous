@@ -5,6 +5,7 @@ import (
 	"github.com/mdev5000/globerous"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // The hybrid compiler allows use of both simple globbing patterns and regex.
@@ -19,9 +20,14 @@ func ExampleHybridGlobRegexPartCompiler_hybridMatching() {
 	// If a part starts with ^ or ends with $ then it is handled as regex instead of as a glob.
 	matcher := compiler.MustCompile("^first|third$", "**", "*.txt")
 
+	wd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+
 	fmt.Println("Matches:")
 	err = globerous.WalkSimple(globerous.NewOSGlobFs(), matcher, path, func(dir string, info os.FileInfo) error {
-		fmt.Println(" ", filepath.Join(dir, info.Name()))
+		fmt.Println(" ", filepath.Join(strings.TrimPrefix(dir, wd), info.Name()))
 		return nil
 	})
 	if err != nil {
@@ -30,6 +36,6 @@ func ExampleHybridGlobRegexPartCompiler_hybridMatching() {
 
 	// Output:
 	// Matches:
-	//   /Users/matt/devtmp/go/globerous/testdata/examplesfs/first/nested/first.txt
-	//   /Users/matt/devtmp/go/globerous/testdata/examplesfs/third/nested/deeper/third.txt
+	//   /testdata/examplesfs/first/nested/first.txt
+	//   /testdata/examplesfs/third/nested/deeper/third.txt
 }

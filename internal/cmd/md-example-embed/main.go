@@ -60,8 +60,8 @@ func main() {
 	must(err)
 
 	out, err := os.OpenFile(markdownFileOut, os.O_RDWR|os.O_CREATE, 0775)
-	defer out.Close()
 	must(err)
+	defer out.Close()
 	renderMarkdown(string(in), out)
 	out.Sync()
 }

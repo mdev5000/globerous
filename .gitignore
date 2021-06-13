@@ -4,4 +4,6 @@
 
 # ignored folders
 /.idea/
+/.vscode/
 /tmp/
+/_tmp/
